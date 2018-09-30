@@ -8,7 +8,7 @@ public class User {
 
 	private String firstName;
 	private String lastName;
-	private String userID;
+	private String uuid;
 	private byte pinHash[];// MD5 of user's pin
 	private ArrayList<Account> accounts;// list of this user's accounts
 
@@ -23,13 +23,13 @@ public class User {
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			this.pinHash = md.digest(pin.getBytes());
 		} catch (NoSuchAlgorithmException e) {
-			System.err.println("caught NoSuchAlgorithmException");
+			System.err.println("Caught NoSuchAlgorithmException");
 			e.printStackTrace();
 			System.exit(1);
 		}
 
 		// create unique userID
-		this.userID = theBank.getNewUserUUID();
+		this.uuid = theBank.getNewUserUUID();
 
 		// create empty account list
 		this.accounts = new ArrayList<Account>();
@@ -43,8 +43,8 @@ public class User {
 		this.accounts.add(anAccount);
 	}
 
-	public String getUUID() {
-		return this.userID;
+	public String getuuid() {
+		return this.uuid;
 	}
 
 	// validate the pin
@@ -59,6 +59,17 @@ public class User {
 			System.exit(1);
 		}
 		return false;
+	}
+	
+	public String getFirstName() {
+		return this.firstName;
+	}
+	
+	public void printAccountsSummary() {
+		System.out.printf("\n\n%s's accounts summary", this.firstName);
+		for(int a = 0; a < this.accounts.size(); a++) {
+			System.out.printf("%d) %s\n", this.accounts.get(a).getSummaryLine());
+		}
 	}
 
 }

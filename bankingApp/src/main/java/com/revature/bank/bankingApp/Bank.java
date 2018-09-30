@@ -6,12 +6,12 @@ import java.util.Random;
 public class Bank {
 
 	private String name;
-	private ArrayList<User> user;
+	private ArrayList<User> users;
 	private ArrayList<Account> accounts;
 
 	public Bank(String name) {
 		this.name = name;
-		this.user = new ArrayList<User>();
+		this.users = new ArrayList<User>();
 		this.accounts = newArrayList<Account>();
 	}
 
@@ -28,8 +28,8 @@ public class Bank {
 			}
 			// check for unique
 			isUnique = false;
-			for (User u : this.user) {
-				if (uuid.compareTo(u.getUUID()) == 0) {
+			for (User u : this.users) {
+				if (uuid.compareTo(u.getuuid()) == 0) {
 					isUnique = true;
 					break;
 				}
@@ -75,6 +75,7 @@ public class Bank {
 
 		// create savings account
 		Account newAccount = new Account("Savings", newUser, this);
+		
 		// add to holder and bank lists
 		newUser.addAccount(newAccount);
 		this.addAccount(newAccount);
@@ -86,12 +87,16 @@ public class Bank {
 	public User userLogin(String userID, String pin) {
 		// search through user list
 		for (User u : this.user) {
-			if (u.getUUID().compareTo(userID) == 0 && u.validatePin(pin)) {
+			if (u.getuuid().compareTo(userID) == 0 && u.validatePin(pin)) {
 				return u;
 			}
 		}
 		// if pin or UUID incorrect return null
 		return null;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 }
