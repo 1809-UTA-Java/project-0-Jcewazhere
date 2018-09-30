@@ -60,16 +60,39 @@ public class User {
 		}
 		return false;
 	}
-	
+
 	public String getFirstName() {
 		return this.firstName;
 	}
-	
+
+	// print summary of the user's accounts
 	public void printAccountsSummary() {
 		System.out.printf("\n\n%s's accounts summary", this.firstName);
-		for(int a = 0; a < this.accounts.size(); a++) {
-			System.out.printf("%d) %s\n", this.accounts.get(a).getSummaryLine());
+		for (int a = 0; a < this.accounts.size(); a++) {
+			System.out.printf("%d) %s\n", a + 1, this.accounts.get(a).getSummaryLine());
 		}
+		System.out.println();
+	}
+
+	public int numAccounts() {
+		return this.accounts.size();
+	}
+
+	public void printTransactionHistory(int theAccount) {
+		this.accounts.get(theAccount).printTransactionHistory();
+	}
+
+	public double getAccountBalance(int fromAccount) {
+		return this.accounts.get(fromAccount).getBalance();
+	}
+
+	public String getAccountUUID(int fromAccount) {
+		return this.accounts.get(fromAccount).getUUID();
+
+	}
+
+	public void addAccountTransaction(int toAccount, double amount, String memo) {
+		this.accounts.get(toAccount).addTransaction(amount, memo);
 	}
 
 }
