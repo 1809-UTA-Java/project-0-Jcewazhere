@@ -1,6 +1,8 @@
 package com.revature.project0;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class user {
@@ -59,6 +61,9 @@ public class user {
 			case "X":
 				App.menu(sc);
 				break;
+			case "x":
+				App.menu(sc);
+				break;
 			default:
 				System.out.println("Please enter one of the choices from above.");
 				sc.nextLine();
@@ -69,7 +74,6 @@ public class user {
 			App.menu(sc);
 		}
 	}// end menu
-
 
 	static void setPas(Scanner sc, boolean logIN, boolean isAdmin, boolean isEMP) {
 		/*
@@ -97,9 +101,10 @@ public class user {
 			admin.menu(sc, logIN, isAdmin, isEMP);
 		} else if (isEMP) {
 			employee.menu(sc, logIN, isAdmin, isEMP);
-		} else if (logIN){
+		} else if (logIN) {
 			menu(sc, logIN, isAdmin, isEMP);
-		}else App.menu(sc);
+		} else
+			App.menu(sc);
 	}// end setPas
 
 	static void reqJoin(Scanner sc, boolean logIN, boolean isAdmin, boolean isEMP) {
@@ -133,9 +138,10 @@ public class user {
 			admin.menu(sc, logIN, isAdmin, isEMP);
 		} else if (isEMP) {
 			employee.menu(sc, logIN, isAdmin, isEMP);
-		} else if (logIN){
+		} else if (logIN) {
 			menu(sc, logIN, isAdmin, isEMP);
-		}else App.menu(sc);
+		} else
+			App.menu(sc);
 	}// end reqJoin
 
 	static void viewAcct(Scanner sc, boolean logIN, boolean isAdmin, boolean isEMP) {
@@ -154,9 +160,10 @@ public class user {
 			admin.menu(sc, logIN, isAdmin, isEMP);
 		} else if (isEMP) {
 			employee.menu(sc, logIN, isAdmin, isEMP);
-		} else if (logIN){
+		} else if (logIN) {
 			menu(sc, logIN, isAdmin, isEMP);
-		}else App.menu(sc);
+		} else
+			App.menu(sc);
 	}// end viewAcct
 
 	static void viewBal(Scanner sc, boolean logIN, boolean isAdmin, boolean isEMP) {
@@ -176,9 +183,10 @@ public class user {
 			admin.menu(sc, logIN, isAdmin, isEMP);
 		} else if (isEMP) {
 			employee.menu(sc, logIN, isAdmin, isEMP);
-		} else if (logIN){
+		} else if (logIN) {
 			menu(sc, logIN, isAdmin, isEMP);
-		}else App.menu(sc);
+		} else
+			App.menu(sc);
 	}// end viewBal
 
 	static void transfer(Scanner sc, boolean logIN, boolean isAdmin, boolean isEMP) {
@@ -202,9 +210,10 @@ public class user {
 			admin.menu(sc, logIN, isAdmin, isEMP);
 		} else if (isEMP) {
 			employee.menu(sc, logIN, isAdmin, isEMP);
-		} else if (logIN){
+		} else if (logIN) {
 			menu(sc, logIN, isAdmin, isEMP);
-		}else App.menu(sc);
+		} else
+			App.menu(sc);
 
 	}// end transfer
 
@@ -224,9 +233,10 @@ public class user {
 			admin.menu(sc, logIN, isAdmin, isEMP);
 		} else if (isEMP) {
 			employee.menu(sc, logIN, isAdmin, isEMP);
-		} else if (logIN){
+		} else if (logIN) {
 			menu(sc, logIN, isAdmin, isEMP);
-		}else App.menu(sc);
+		} else
+			App.menu(sc);
 	}// end withdraw
 
 	static void deposit(Scanner sc, boolean logIN, boolean isAdmin, boolean isEMP) {
@@ -239,14 +249,23 @@ public class user {
 		amt = java.lang.Math.abs(amt);
 
 		/* sql prep statement to ADD amt to acctID then print new balance */
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+
+			Connection con = DriverManager.getConnection("192.168.56.105:1521:xe", "SYSTEM", "revature");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (isAdmin) {
 			admin.menu(sc, logIN, isAdmin, isEMP);
 		} else if (isEMP) {
 			employee.menu(sc, logIN, isAdmin, isEMP);
-		} else if (logIN){
+		} else if (logIN) {
 			menu(sc, logIN, isAdmin, isEMP);
-		}else App.menu(sc);
+		} else
+			App.menu(sc);
 
 	}// end deposit
 

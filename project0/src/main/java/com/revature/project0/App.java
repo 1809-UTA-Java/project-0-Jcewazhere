@@ -14,7 +14,8 @@ public class App {
 		boolean isAdmin = false;// reset flags, aka log out
 		boolean isEMP = false;
 
-		sc.nextLine();// clear scanner
+		System.out.println(sc.nextLine());
+		// clear scanner
 
 		/*
 		 * for (int i = 0; i < 30; i++) System.out.println(); // clear console the easy

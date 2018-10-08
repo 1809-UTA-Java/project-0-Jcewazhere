@@ -77,7 +77,8 @@ public class admin {
 		System.out.println("Are you sure you want to delete " + /* FName from table */ "'s account? Y/N");
 		String yn = sc.next();
 		if (yn.equalsIgnoreCase("Y")) {
-			/* sql prep statement to cascade delete the selected account */} else {
+			/* sql prep statement to cascade delete the selected account */
+			} else {
 			menu(sc, logIN, isAdmin, isEMP);
 		}
 	}// end deleteAcct
