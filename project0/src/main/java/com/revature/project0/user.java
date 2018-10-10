@@ -138,25 +138,58 @@ public class user {
 			PreparedStatement ps = null;
 			String sql = null;
 			ResultSet rs = null;
+			SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+			String dateForm = dateFormat.format(new Date());
 
+			
+			sql = "SELECT MAX (TRANSID) FROM TRANSACTIONS WHERE USERID = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userID);//find most recent transaction in this account
+			rs = ps.executeQuery();
+			String transID = rs.getString("TRANSID");
+			
+			
+			sql = "SELECT BALANCE FROM TRANSACTIONS WHERE USERID = ? AND WHERE TRANSID = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userID);
+			ps.setString(2, transID);
+			rs = ps.executeQuery();//get the most recent balance on the account
+			String amount = rs.getString("BALANCE");
+			
+			
+			sql = "INSERT INTO TRANSACTIONS (TYPE, AMOUNT, TIMESTAMP) VALUE (?,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "Transfer");
+			ps.setString(2, amount);//log the transfer
+			ps.setString(3, dateForm);
+			ps.executeQuery();
+			
+			//add and remove money from accounts
+			sql = "INSERT INTO TRANSACTION (TYPE, ACCTID, AMOUNT, TIMESTAMP) VALUES(?,?,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "Transfer");
+			ps.setString(2, tAcctID);
+			ps.setString(3, amount);
+			ps.setString(4, dateForm);
+			ps.executeQuery();
+
+			sql = "INSERT INTO TRANSACTIONS (TYPE, ACCTID, AMOUNT, TIMESTAMP) VALUES (?,?,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "Transfer");
+			ps.setString(2, cAcctID);
+			ps.setString(3, amount);
+			ps.setString(4, dateForm);
+			ps.executeQuery();
+
+
+			
 			sql = "UPDATE ACCOUNT ACCTID ? WHERE USERID = ? AND WHERE ACCTID = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, tAcctID);
 			ps.setString(2, userID);//aim the account pointer at another account
 			ps.setString(3, cAcctID);
+			ps.executeQuery();
 
-			ps.executeQuery();
-			
-			sql = "SELECT MAX (TRANSID) FROM TRANSACTIONS WHERE USERID = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, userID);
-			ps.executeQuery();
-			
-			String amount = rs.getString("TRANSID");
-			
-			
-			
-			sql = "INSERT INTO TRANSACTIONS (TYPE, AMOUNT, TIMESTAMP) VALUE (?,?,?) WHERE "
 
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
