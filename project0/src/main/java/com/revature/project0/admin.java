@@ -1,5 +1,6 @@
 package com.revature.project0;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.Scanner;
 
@@ -74,11 +75,24 @@ public class admin {
 			System.out.println(); // clear console the easy way
 		System.out.println("Please enter the acctID of the account you wish to DELETE: ");
 		String userID = sc.next();
-		System.out.println("Are you sure you want to delete " + /* FName from table */ "'s account? Y/N");
+		System.out.println("Are you sure you want to delete this account? Y/N");
 		String yn = sc.next();
 		if (yn.equalsIgnoreCase("Y")) {
 			/* sql prep statement to cascade delete the selected account */
-			} else {
+
+			try {
+				Connection conn = ConnectionUtil.getConnection();
+				PreparedStatement ps = null;
+				String sql = null;
+				sql = "DELETE FROM USERS WHERE USERID = ? CASCADE";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, userID);
+
+			} catch (SQLException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
 			menu(sc, logIN, isAdmin, isEMP);
 		}
 	}// end deleteAcct
